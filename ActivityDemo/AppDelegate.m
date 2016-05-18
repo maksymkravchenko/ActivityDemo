@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+NSString *kActivityKey = @"Activity";
+
 @interface AppDelegate ()
 
 @end

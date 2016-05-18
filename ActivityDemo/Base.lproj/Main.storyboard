@@ -15,13 +15,49 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="zMo-xb-tzC">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="50" id="zMo-xb-tzC" customClass="ActivityTableViewCell">
+                                <rect key="frame" x="0.0" y="92" width="600" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zMo-xb-tzC" id="6tD-dm-iOD">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8MZ-bH-Egn">
+                                            <rect key="frame" x="33" y="28" width="32.5" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" red="1" green="0.2072127282" blue="0.21101607920000001" alpha="0.7891971982758621" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OSn-E5-mO1">
+                                            <rect key="frame" x="90.5" y="8" width="476.5" height="31.5"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZe-AV-S2k">
+                                            <rect key="frame" x="33" y="8" width="37.5" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="1" green="0.2072127282" blue="0.21101607920000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="EZe-AV-S2k" firstAttribute="top" secondItem="6tD-dm-iOD" secondAttribute="topMargin" id="2B8-n3-fRq"/>
+                                        <constraint firstItem="8MZ-bH-Egn" firstAttribute="top" secondItem="EZe-AV-S2k" secondAttribute="bottom" constant="-1" id="E2i-lV-I35"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="OSn-E5-mO1" secondAttribute="bottom" constant="2" id="GQ1-J8-KMx"/>
+                                        <constraint firstItem="OSn-E5-mO1" firstAttribute="top" secondItem="6tD-dm-iOD" secondAttribute="topMargin" id="VtH-De-1LN"/>
+                                        <constraint firstItem="8MZ-bH-Egn" firstAttribute="leading" secondItem="EZe-AV-S2k" secondAttribute="leading" id="ewX-j9-JR8"/>
+                                        <constraint firstItem="EZe-AV-S2k" firstAttribute="leading" secondItem="6tD-dm-iOD" secondAttribute="leadingMargin" constant="25" id="lTN-3G-hAs"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="OSn-E5-mO1" secondAttribute="trailing" constant="25" id="qJZ-Fv-15y"/>
+                                        <constraint firstItem="EZe-AV-S2k" firstAttribute="top" secondItem="6tD-dm-iOD" secondAttribute="topMargin" id="qRA-PZ-0lV"/>
+                                        <constraint firstItem="OSn-E5-mO1" firstAttribute="leading" secondItem="8MZ-bH-Egn" secondAttribute="trailing" constant="25" id="uOp-bG-16l"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dateLabel" destination="8MZ-bH-Egn" id="feO-mI-Hn8"/>
+                                    <outlet property="noteTextView" destination="OSn-E5-mO1" id="fAH-eN-6j7"/>
+                                    <outlet property="typeLabel" destination="EZe-AV-S2k" id="3rN-GZ-J6l"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -33,7 +69,7 @@
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="oe5-qd-h4Q">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="CdY-Gf-XG1" kind="presentation" modalPresentationStyle="fullScreen" id="JRH-68-wjK"/>
+                                <segue destination="CdY-Gf-XG1" kind="presentation" identifier="editSegue" modalPresentationStyle="fullScreen" id="JRH-68-wjK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -45,7 +81,7 @@
         <!--Editor Table View Controller-->
         <scene sceneID="sdd-js-ds7">
             <objects>
-                <tableViewController id="p4d-fm-Act" customClass="EditorTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="editor" id="p4d-fm-Act" customClass="EditorTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ggy-ah-PWE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -61,8 +97,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IfQ-j1-7Ug">
-                                                    <rect key="frame" x="268.5" y="5.5" width="63" height="33"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="269" y="6" width="62" height="32"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="tintColor" red="1" green="0.2072127282" blue="0.21101607920000001" alpha="0.45794719827586206" colorSpace="calibratedRGB"/>
                                                     <state key="normal" title="Meeting">
                                                         <color key="titleColor" red="1" green="0.2072127282" blue="0.21101607920000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
@@ -71,8 +108,9 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BEh-y7-cTc">
-                                                    <rect key="frame" x="346.5" y="5.5" width="36" height="33"/>
+                                                    <rect key="frame" x="346" y="5" width="36" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="tintColor" red="1" green="0.2072127282" blue="0.21101607920000001" alpha="0.45794719830000002" colorSpace="calibratedRGB"/>
                                                     <state key="normal" title="Task">
                                                         <color key="titleColor" red="1" green="0.2072127282" blue="0.21101607920000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
@@ -81,8 +119,9 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WMW-Vt-hYd">
-                                                    <rect key="frame" x="223.5" y="5.5" width="30" height="33"/>
+                                                    <rect key="frame" x="224" y="5" width="30" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="tintColor" red="1" green="0.2072127282" blue="0.21101607920000001" alpha="0.45794719830000002" colorSpace="calibratedRGB"/>
                                                     <state key="normal" title="Call">
                                                         <color key="titleColor" red="1" green="0.2072127282" blue="0.21101607920000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
@@ -161,19 +200,22 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="DQn-0O-45U">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="gVb-NU-WRL" kind="showDetail" action="showViewController:sender:" id="LT0-HD-Q6z"/>
+                                <action selector="onCancelAction:" destination="p4d-fm-Act" id="zWc-hG-rEC"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="KVl-PT-zTQ">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onSaveAction:" destination="p4d-fm-Act" id="y4s-ay-u47"/>
-                                <segue destination="gVb-NU-WRL" kind="showDetail" id="rSO-Zu-cYA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="callButton" destination="WMW-Vt-hYd" id="ETH-iJ-jBC"/>
+                        <outlet property="datePicker" destination="CB8-9U-94S" id="oB9-v5-3NY"/>
+                        <outlet property="meetingButton" destination="IfQ-j1-7Ug" id="jao-oH-5qN"/>
                         <outlet property="noteTextView" destination="SAr-wZ-LGb" id="RMc-HD-1CF"/>
+                        <outlet property="taskButton" destination="BEh-y7-cTc" id="yMo-xy-smb"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FO3-hE-d0T" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -224,7 +266,4 @@
             <point key="canvasLocation" x="1593" y="501"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="LT0-HD-Q6z"/>
-    </inferredMetricsTieBreakers>
 </document>

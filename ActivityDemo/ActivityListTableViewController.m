@@ -7,6 +7,9 @@
 //
 
 #import "ActivityListTableViewController.h"
+#import "ActivityTableViewCell.h"
+#import "AppDelegate.h"
+#import "EditorTableViewController.h"
 
 enum : NSInteger
 {
@@ -16,19 +19,27 @@ enum : NSInteger
 	kActivitySectionCount
 };
 
+static NSString * const kEditSegueId = @"editSegue";
+static NSString * const kTableViewCellReusableId = @"Cell";
+
 @interface ActivityListTableViewController ()
+
+@property (nonatomic) NSMutableArray *outdatedActivities;
+@property (nonatomic) NSMutableArray *actualActivities;
+@property (nonatomic) NSMutableArray *completedActivities;
 
 @end
 
 @implementation ActivityListTableViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
 
-	self.tableView.estimatedRowHeight = 80.0;
+	self.tableView.estimatedRowHeight = 50.0;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
-	[self.navigationItem setHidesBackButton:YES];
+	self.navigationItem.hidesBackButton = YES;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -37,75 +48,310 @@ enum : NSInteger
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
+	[self updateActivitiesLists];
+}
+
+- (void)updateActivitiesLists
+{
+	NSManagedObjectContext *managedObjectContext = [self appDelegate].managedObjectContext;
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kActivityKey];
+	NSArray *allActivities = [managedObjectContext executeFetchRequest:fetchRequest error:nil];
+	
+	self.outdatedActivities = [NSMutableArray new];
+	self.actualActivities = [NSMutableArray new];
+	self.completedActivities = [NSMutableArray new];
+
+	for (NSManagedObject *activity in allActivities)
+	{
+		ActivityStatus status = [[activity valueForKey:@"status"] integerValue];
+		switch (status)
+		{
+			case kActivityStatusOutdated:
+			{
+				[self.outdatedActivities addObject:activity];
+				break;
+			}
+			case kActivityStatusActual:
+			{
+				NSDate *date = (NSDate *)[activity valueForKey:@"date"];
+				if ([date laterDate:[NSDate date]] == date)
+				{
+					[self.actualActivities addObject:activity];
+				}
+				else
+				{
+					[self.outdatedActivities addObject:activity];
+				}
+				break;
+			}
+			case kActivityStatusCompleted:
+			{
+				[self.completedActivities addObject:activity];
+				break;
+			}
+			default:
+				break;
+		}
+	}
+	
+	[self.tableView reloadData];
+}
+
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+
+- (AppDelegate *)appDelegate
+{
+	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return kActivitySectionCount;
+	return kActivitySectionCount;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+	NSInteger result = self.outdatedActivities.count;
+	if (section == kActivitySectionActual)
+	{
+		result = self.actualActivities.count;
+	}
+	else if (section == kActivityStatusCompleted)
+	{
+		result = self.completedActivities.count;
+	}
+
+    return result;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTableViewCellReusableId forIndexPath:indexPath];
+	NSInteger section = indexPath.section;
+	NSInteger row = indexPath.row;
+	NSManagedObject *activity = nil;
+
+	switch (section)
+	{
+		case kActivitySectionOutdated:
+		{
+			activity = self.outdatedActivities[row];
+			break;
+		}
+		case kActivitySectionActual:
+		{
+			activity = self.actualActivities[row];
+			break;
+		}
+		case kActivitySectionCompleted:
+		{
+			activity = self.completedActivities[row];
+			break;
+		}
+		default:
+		{
+			NSAssert(activity == nil, @"activity can't be nil when fill table view");
+			break;
+		}
+	}
+	
+	cell.typeLabel.text = [self getTypeStringForActivity:activity];
+	cell.dateLabel.text = [self getDateStringForActivity:activity];
+	cell.noteTextView.text = [activity valueForKey:@"note"];
+	
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	NSString *result = @"";
+	if (section == kActivitySectionOutdated && self.outdatedActivities.count > 0)
+	{
+		result = NSLocalizedString(@"Outdated", @"");
+	}
+	else if (section == kActivitySectionActual && self.actualActivities.count > 0)
+	{
+		result = NSLocalizedString(@"Actual", @"");
+	}
+	else if (section == kActivityStatusCompleted && self.completedActivities.count > 0)
+	{
+		result = NSLocalizedString(@"Completed", @"");
+	}
+	return result;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSManagedObject *activity = [self getActivityFor:indexPath];
+
+	[self presentAlertSheetForActivity:activity forIndexPath:indexPath];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+#pragma mark - util methods
+
+- (void)presentAlertSheetForActivity:(nonnull NSManagedObject *)activity forIndexPath:(NSIndexPath *)indexPath
+{
+	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Modify activity", @"") message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+	
+	UIAlertAction *cancelAction = [UIAlertAction
+								   actionWithTitle:NSLocalizedString(@"Cancel", @"")
+								   style:UIAlertActionStyleCancel
+								   handler:^(UIAlertAction *action)
+								   {
+								   }];
+	
+	
+	NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
+
+	
+	UIAlertAction *editAction = [UIAlertAction
+							   actionWithTitle:NSLocalizedString(@"Edit", @"")
+							   style:UIAlertActionStyleDefault
+							   handler:^(UIAlertAction *action)
+							   {
+							   }];
+	
+	UIAlertAction *deleteAction = [UIAlertAction
+								 actionWithTitle:NSLocalizedString(@"Delete", @"")
+								 style:UIAlertActionStyleDefault
+								 handler:^(UIAlertAction *action)
+								 {
+									 [context deleteObject:activity];
+									 
+									 NSError *error = nil;
+									 if ([context save:&error])
+									 {
+										 [[self getActivityArrayFor:indexPath] removeObject:activity];
+									 }
+									 else
+									 {
+										 NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
+									 }
+									 
+									 [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+								 }];
+	
+	UIAlertAction *completeAction = [UIAlertAction
+								 actionWithTitle:NSLocalizedString(@"Complete", @"")
+								 style:UIAlertActionStyleDefault
+								 handler:^(UIAlertAction *action)
+								 {
+									 [[self getActivityArrayFor:indexPath] setValue:@(kActivityStatusCompleted) forKey:@"status"];
+									
+									 NSError *error = nil;
+									 if (![context save:&error])
+									 {
+										 NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+									 }
+
+									 [self updateActivitiesLists];
+								 }];
+	
+	[alertController addAction:cancelAction];
+	[alertController addAction:editAction];
+	[alertController addAction:deleteAction];
+	[alertController addAction:completeAction];
+	
+	[self presentViewController:alertController animated:YES completion:nil];
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+- (NSManagedObject *)getActivityFor:(NSIndexPath *)indexPath
+{
+	NSManagedObject *activity = nil;
+	
+	NSInteger row = indexPath.row;
+	switch (indexPath.section)
+	{
+		case kActivitySectionOutdated:
+		{
+			activity = self.outdatedActivities[row];
+			break;
+		}
+		case kActivitySectionActual:
+		{
+			activity = self.actualActivities[row];
+			break;
+		}
+		case kActivitySectionCompleted:
+		{
+			activity = self.completedActivities[row];
+			break;
+		}
+		default:
+		{
+			NSAssert(activity == nil, @"activity can't be nil when fill table view");
+			break;
+		}
+	}
+	return activity;
 }
-*/
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSMutableArray *)getActivityArrayFor:(NSIndexPath *)indexPath
+{
+	NSMutableArray *targetArray = nil;
+	
+	switch (indexPath.section)
+	{
+		case kActivitySectionOutdated:
+		{
+			targetArray = self.outdatedActivities;
+			break;
+		}
+		case kActivitySectionActual:
+		{
+			targetArray = self.actualActivities;
+			break;
+		}
+		case kActivitySectionCompleted:
+		{
+			targetArray = self.completedActivities;
+			break;
+		}
+		default:
+		{
+			NSAssert(targetArray == nil, @"activity can't be nil when fill table view");
+			break;
+		}
+	}
+	return targetArray;
 }
-*/
+
+- (NSString *)getTypeStringForActivity:(NSManagedObject *)activity
+{
+	NSString *result = @"Call";
+
+	NSInteger type = [[activity valueForKey:@"type"] integerValue];
+	if (type == kActivityTypeMeeting)
+	{
+		result = @"Meeting";
+	}
+	else if (type == kActivityTypeTask)
+	{
+		result = @"Task";
+	}
+	return result;
+}
+
+- (NSString *)getDateStringForActivity:(NSManagedObject *)activity
+{
+	NSDate *date = (NSDate *)[activity valueForKey:@"date"];
+	NSDateFormatter *formatter = [NSDateFormatter new];
+	[formatter setDateFormat: @"MM-dd HH:mm"];
+	
+	NSString *result = [formatter stringFromDate:date];
+	return result;
+}
 
 @end

@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class NSManagedObject;
+
 @interface EditorTableViewController : UITableViewController
+
+@property (nonatomic, nullable) NSManagedObject *selectedActivity;
+
 
 @end

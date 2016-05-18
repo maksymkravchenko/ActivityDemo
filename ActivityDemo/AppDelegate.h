@@ -9,6 +9,23 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
+typedef enum : NSInteger
+{
+	kActivityTypeCall = 0,
+	kActivityTypeMeeting,
+	kActivityTypeTask
+} ActivityType;
+
+typedef enum : NSInteger
+{
+	kActivityStatusOutdated = 0,
+	kActivityStatusActual,
+	kActivityStatusCompleted
+} ActivityStatus;
+
+extern NSString *kActivityKey;
+
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
