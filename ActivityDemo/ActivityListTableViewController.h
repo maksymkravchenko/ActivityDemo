@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ActivityListTableViewController.h
 //  ActivityDemo
 //
 //  Created by Кравченко Максим on 5/18/16.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface ActivityListTableViewController : UITableViewController
 
 @end
-
