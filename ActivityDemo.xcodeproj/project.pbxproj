@@ -14,6 +14,7 @@
 		4DFF07F91CEC2F6300C2A815 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DFF07F81CEC2F6300C2A815 /* Assets.xcassets */; };
 		4DFF07FC1CEC2F6300C2A815 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DFF07FA1CEC2F6300C2A815 /* LaunchScreen.storyboard */; };
 		4DFF08081CEC305300C2A815 /* ActivityListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFF08071CEC305300C2A815 /* ActivityListTableViewController.m */; };
+		9F64C11E1CECE6B100F35E15 /* EditorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F64C11D1CECE6B100F35E15 /* EditorTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,8 @@
 		4DFF07FD1CEC2F6300C2A815 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DFF08061CEC305300C2A815 /* ActivityListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityListTableViewController.h; sourceTree = "<group>"; };
 		4DFF08071CEC305300C2A815 /* ActivityListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityListTableViewController.m; sourceTree = "<group>"; };
+		9F64C11C1CECE6B100F35E15 /* EditorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorTableViewController.h; sourceTree = "<group>"; };
+		9F64C11D1CECE6B100F35E15 /* EditorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +67,8 @@
 				4DFF07ED1CEC2F6300C2A815 /* AppDelegate.m */,
 				4DFF08061CEC305300C2A815 /* ActivityListTableViewController.h */,
 				4DFF08071CEC305300C2A815 /* ActivityListTableViewController.m */,
+				9F64C11C1CECE6B100F35E15 /* EditorTableViewController.h */,
+				9F64C11D1CECE6B100F35E15 /* EditorTableViewController.m */,
 				4DFF07F21CEC2F6300C2A815 /* Main.storyboard */,
 				4DFF07F81CEC2F6300C2A815 /* Assets.xcassets */,
 				4DFF07FA1CEC2F6300C2A815 /* LaunchScreen.storyboard */,
@@ -155,6 +160,7 @@
 				4DFF08081CEC305300C2A815 /* ActivityListTableViewController.m in Sources */,
 				4DFF07EE1CEC2F6300C2A815 /* AppDelegate.m in Sources */,
 				4DFF07EB1CEC2F6300C2A815 /* main.m in Sources */,
+				9F64C11E1CECE6B100F35E15 /* EditorTableViewController.m in Sources */,
 				4DFF07F71CEC2F6300C2A815 /* ActivityDemo.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,6 +312,7 @@
 				4DFF08021CEC2F6300C2A815 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

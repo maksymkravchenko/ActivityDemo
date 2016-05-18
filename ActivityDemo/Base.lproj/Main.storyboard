@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Og-cr-3mU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Og-cr-3mU">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Activities List-->
         <scene sceneID="ZmB-ZR-RyK">
             <objects>
-                <tableViewController id="gVb-NU-WRL" sceneMemberID="viewController">
+                <tableViewController id="gVb-NU-WRL" customClass="ActivityListTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="eEO-Wa-8hY">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="zMo-xb-tzC">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="zMo-xb-tzC">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zMo-xb-tzC" id="6tD-dm-iOD">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -32,7 +33,7 @@
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="oe5-qd-h4Q">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="CdY-Gf-XG1" kind="show" id="JRH-68-wjK"/>
+                                <segue destination="CdY-Gf-XG1" kind="presentation" modalPresentationStyle="fullScreen" id="JRH-68-wjK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -41,24 +42,116 @@
             </objects>
             <point key="canvasLocation" x="905" y="501"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Editor Table View Controller-->
         <scene sceneID="sdd-js-ds7">
             <objects>
-                <tableViewController id="p4d-fm-Act" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ggy-ah-PWE">
+                <tableViewController id="p4d-fm-Act" customClass="EditorTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ggy-ah-PWE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="TW1-uA-9HB">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TW1-uA-9HB" id="wg7-Kb-cR8">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
+                        <sections>
+                            <tableViewSection id="jEu-kl-CKC">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="typeCell" id="TW1-uA-9HB">
+                                        <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TW1-uA-9HB" id="wg7-Kb-cR8">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IfQ-j1-7Ug">
+                                                    <rect key="frame" x="268.5" y="5.5" width="63" height="33"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="Meeting">
+                                                        <color key="titleColor" red="1" green="0.2072127282" blue="0.21101607920000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="onMeetingTypeAction:" destination="p4d-fm-Act" eventType="touchUpInside" id="PXh-ah-iDu"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BEh-y7-cTc">
+                                                    <rect key="frame" x="346.5" y="5.5" width="36" height="33"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="Task">
+                                                        <color key="titleColor" red="1" green="0.2072127282" blue="0.21101607920000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="onTaskTypeAction:" destination="p4d-fm-Act" eventType="touchUpInside" id="1kl-Ql-eRE"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WMW-Vt-hYd">
+                                                    <rect key="frame" x="223.5" y="5.5" width="30" height="33"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="Call">
+                                                        <color key="titleColor" red="1" green="0.2072127282" blue="0.21101607920000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="onCallTypeAction:" destination="p4d-fm-Act" eventType="touchUpInside" id="f6h-WI-tv9"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="WMW-Vt-hYd" firstAttribute="centerY" secondItem="wg7-Kb-cR8" secondAttribute="centerY" id="ayG-N8-NX3"/>
+                                                <constraint firstItem="BEh-y7-cTc" firstAttribute="leading" secondItem="IfQ-j1-7Ug" secondAttribute="trailing" constant="15" id="eGm-Zs-TbY"/>
+                                                <constraint firstItem="IfQ-j1-7Ug" firstAttribute="leading" secondItem="WMW-Vt-hYd" secondAttribute="trailing" constant="15" id="gVR-kU-sGs"/>
+                                                <constraint firstItem="IfQ-j1-7Ug" firstAttribute="centerY" secondItem="wg7-Kb-cR8" secondAttribute="centerY" id="ivF-7D-xIp"/>
+                                                <constraint firstItem="IfQ-j1-7Ug" firstAttribute="centerX" secondItem="wg7-Kb-cR8" secondAttribute="centerX" id="jh8-w1-uwO"/>
+                                                <constraint firstItem="BEh-y7-cTc" firstAttribute="centerY" secondItem="wg7-Kb-cR8" secondAttribute="centerY" id="jt0-lg-fwZ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="noteCell" rowHeight="200" id="cff-k8-LPe">
+                                        <rect key="frame" x="0.0" y="108" width="600" height="200"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cff-k8-LPe" id="hiu-fy-Xwi">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAr-wZ-LGb">
+                                                    <rect key="frame" x="33" y="8" width="559" height="183.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="tintColor" red="1" green="0.2072127282" blue="0.21101607920000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="SAr-wZ-LGb" secondAttribute="trailing" id="K9n-Lw-IoR"/>
+                                                <constraint firstItem="SAr-wZ-LGb" firstAttribute="top" secondItem="hiu-fy-Xwi" secondAttribute="topMargin" id="LMv-R8-p7w"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="SAr-wZ-LGb" secondAttribute="bottom" id="Rf1-vo-mby"/>
+                                                <constraint firstItem="SAr-wZ-LGb" firstAttribute="leading" secondItem="hiu-fy-Xwi" secondAttribute="leadingMargin" constant="25" id="n1V-Qv-5Ot"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePickerCell" rowHeight="150" id="cFD-lY-Tp3">
+                                        <rect key="frame" x="0.0" y="308" width="600" height="150"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cFD-lY-Tp3" id="0Ft-LZ-8HD">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="CB8-9U-94S">
+                                                    <rect key="frame" x="8" y="8" width="584" height="134"/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="485287416.46519899">
+                                                        <!--2016-05-18 18:03:36 +0000-->
+                                                    </date>
+                                                    <connections>
+                                                        <action selector="onDateSelected:" destination="p4d-fm-Act" eventType="valueChanged" id="kbb-wh-PYf"/>
+                                                    </connections>
+                                                </datePicker>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="CB8-9U-94S" firstAttribute="top" secondItem="0Ft-LZ-8HD" secondAttribute="topMargin" id="Nv0-px-Si1"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="CB8-9U-94S" secondAttribute="trailing" id="ROb-WI-nZG"/>
+                                                <constraint firstItem="CB8-9U-94S" firstAttribute="leading" secondItem="0Ft-LZ-8HD" secondAttribute="leadingMargin" id="ktl-1R-Dzl"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="CB8-9U-94S" secondAttribute="bottom" id="l6s-uu-WbJ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
                         <connections>
                             <outlet property="dataSource" destination="p4d-fm-Act" id="J1g-ke-spg"/>
                             <outlet property="delegate" destination="p4d-fm-Act" id="Z4i-mE-3FG"/>
@@ -67,11 +160,21 @@
                     <navigationItem key="navigationItem" id="Bi1-1F-tGg">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="DQn-0O-45U">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="gVb-NU-WRL" kind="showDetail" action="showViewController:sender:" id="LT0-HD-Q6z"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="KVl-PT-zTQ">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="onSaveAction:" destination="p4d-fm-Act" id="y4s-ay-u47"/>
+                                <segue destination="gVb-NU-WRL" kind="showDetail" id="rSO-Zu-cYA"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="noteTextView" destination="SAr-wZ-LGb" id="RMc-HD-1CF"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FO3-hE-d0T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -121,4 +224,7 @@
             <point key="canvasLocation" x="1593" y="501"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="LT0-HD-Q6z"/>
+    </inferredMetricsTieBreakers>
 </document>
